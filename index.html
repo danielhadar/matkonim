@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,maximum-scale=5">
+<meta name="theme-color" content="#F7F2E8">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<title>מתכונים</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@400;500;700;900&family=Heebo:wght@300;400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div id="app" aria-live="polite"></div>
+
+  <template id="tpl-home">
+    <div class="screen home">
+      <header class="page-top">
+        <div class="wordmark">מתכונים</div>
+        <div class="kicker" data-count></div>
+      </header>
+      <div class="search-wrap">
+        <input class="search" type="search" placeholder="חיפוש…" aria-label="חיפוש מתכונים" data-search>
+      </div>
+      <ul class="recipe-list" data-list></ul>
+      <p class="empty" data-empty hidden>אין מתכונים תואמים</p>
+    </div>
+  </template>
+
+  <template id="tpl-recipe">
+    <article class="screen detail">
+      <a href="#/" class="back">→ חזרה</a>
+      <h1 data-title></h1>
+      <div class="sub" data-sub></div>
+      <section class="ingredients">
+        <h2>מצרכים</h2>
+        <div class="ing-list" data-ingredients></div>
+      </section>
+      <section class="instructions">
+        <h2>הוראות הכנה</h2>
+        <ol class="steps" data-instructions></ol>
+      </section>
+    </article>
+  </template>
+
+  <template id="tpl-admin-lock">
+    <div class="screen lock">
+      <div class="lock-inner">
+        <div class="lock-title" data-lock-title>הזן PIN</div>
+        <div class="lock-sub" data-lock-sub>ארבע ספרות לגישה לעריכה</div>
+        <div class="pin-dots" data-dots>
+          <span></span><span></span><span></span><span></span>
+        </div>
+        <div class="pin-pad">
+          <button type="button">1</button><button type="button">2</button><button type="button">3</button>
+          <button type="button">4</button><button type="button">5</button><button type="button">6</button>
+          <button type="button">7</button><button type="button">8</button><button type="button">9</button>
+          <button type="button" class="pad-spacer" aria-hidden="true"></button>
+          <button type="button">0</button>
+          <button type="button" class="pad-back" aria-label="מחק">⌫</button>
+        </div>
+        <button class="text-btn" data-forgot hidden>איפוס</button>
+      </div>
+    </div>
+  </template>
+
+  <template id="tpl-admin-token">
+    <div class="screen token">
+      <a href="#/" class="back">→ חזרה</a>
+      <h1>GitHub Token</h1>
+      <p class="token-help">
+        כדי לשמור עריכות צריך Fine-grained PAT עם הרשאת Contents: Read and write על הריפו של מתכונים.
+        <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener">צור טוקן</a>
+      </p>
+      <label class="field">
+        <span>שם בעלים (owner)</span>
+        <input type="text" data-owner placeholder="danielhadar" dir="ltr">
+      </label>
+      <label class="field">
+        <span>שם ריפו</span>
+        <input type="text" data-repo placeholder="matkonim" dir="ltr">
+      </label>
+      <label class="field">
+        <span>Token</span>
+        <input type="password" data-token placeholder="github_pat_…" dir="ltr" autocomplete="off">
+      </label>
+      <div class="actions sticky">
+        <button class="btn primary" data-save>שמור</button>
+      </div>
+      <p class="token-note">הטוקן נשמר רק בדפדפן הזה, ולא נשלח לשום מקום חוץ מ־api.github.com.</p>
+    </div>
+  </template>
+
+  <template id="tpl-admin-home">
+    <div class="screen admin-home">
+      <header class="page-top">
+        <div class="wordmark">עריכה</div>
+        <a href="#/" class="kicker-link">יציאה לצפייה</a>
+      </header>
+      <div class="search-wrap">
+        <input class="search" type="search" placeholder="חיפוש…" aria-label="חיפוש" data-search>
+      </div>
+      <ul class="recipe-list admin" data-list></ul>
+      <p class="empty" data-empty hidden>אין עדיין מתכונים. הוסף אחד.</p>
+      <a href="#/admin/new" class="fab" aria-label="מתכון חדש">+</a>
+    </div>
+  </template>
+
+  <template id="tpl-admin-edit">
+    <form class="screen edit">
+      <a href="#/admin" class="back">→ חזרה</a>
+      <h1 data-heading>מתכון חדש</h1>
+
+      <label class="field">
+        <span>כותרת</span>
+        <input type="text" data-title required placeholder="שם המתכון">
+      </label>
+
+      <label class="field">
+        <span>מצרכים — שורה אחת לכל מצרך</span>
+        <textarea data-ingredients rows="8" placeholder="1 כוס קמח&#10;2 ביצים&#10;מלח"></textarea>
+      </label>
+
+      <label class="field">
+        <span>הוראות הכנה — שורה אחת לכל שלב</span>
+        <textarea data-instructions rows="12" placeholder="מערבבים את הקמח והביצים.&#10;מחממים תנור ל־180."></textarea>
+      </label>
+
+      <details class="preview-panel">
+        <summary>תצוגה מקדימה</summary>
+        <div class="preview-body" data-preview></div>
+      </details>
+
+      <div class="actions sticky">
+        <button type="button" class="btn ghost" data-delete hidden>מחיקה</button>
+        <button type="submit" class="btn primary" data-save>שמירה</button>
+      </div>
+    </form>
+  </template>
+
+  <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+
+  <script src="app.js"></script>
+</body>
+</html>

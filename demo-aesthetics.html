@@ -1,0 +1,886 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>מתכונים — בחירת סגנון</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@400;500;700;900&family=Heebo:wght@300;400;500;700&family=Rubik:wght@400;500;700;900&family=Assistant:wght@300;400;600;700&family=Secular+One&family=Alef:wght@400;700&family=Noto+Serif+Hebrew:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { overflow-x: hidden; }
+  body {
+    font-family: 'Heebo', sans-serif;
+    background: #22201C;
+    color: #F7F2E8;
+    min-height: 100vh;
+    line-height: 1.6;
+  }
+  .chrome {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 48px 24px 120px;
+  }
+  .chrome > header {
+    text-align: center;
+    padding: 48px 0 64px;
+    border-bottom: 1px solid rgba(255,255,255,.1);
+    margin-bottom: 64px;
+  }
+  .chrome > header h1 {
+    font-family: 'Frank Ruhl Libre', serif;
+    font-weight: 700;
+    font-size: clamp(32px, 6vw, 56px);
+    letter-spacing: -.01em;
+    margin-bottom: 12px;
+  }
+  .chrome > header p {
+    opacity: .7;
+    font-size: 17px;
+    max-width: 640px;
+    margin: 0 auto;
+  }
+  .chrome > header .note {
+    margin-top: 18px;
+    font-size: 14px;
+    opacity: .5;
+    font-family: 'Heebo', sans-serif;
+  }
+
+  .option {
+    margin-bottom: 120px;
+  }
+  .option-label {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    margin-bottom: 20px;
+    padding: 0 8px;
+  }
+  .option-num {
+    font-family: 'Frank Ruhl Libre', serif;
+    font-weight: 900;
+    font-size: 64px;
+    opacity: .15;
+    letter-spacing: -.02em;
+    line-height: 1;
+  }
+  .option-meta h2 {
+    font-family: 'Frank Ruhl Libre', serif;
+    font-weight: 700;
+    font-size: 28px;
+    margin-bottom: 4px;
+  }
+  .option-meta p {
+    opacity: .6;
+    font-size: 15px;
+    max-width: 560px;
+  }
+
+  /* iPad frame — cosmetic, just to give context */
+  .device-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-top: 24px;
+  }
+  @media (max-width: 900px) {
+    .device-row { grid-template-columns: 1fr; }
+  }
+  .device {
+    border-radius: 28px;
+    overflow: hidden;
+    box-shadow:
+      0 1px 0 rgba(255,255,255,.08) inset,
+      0 0 0 1px rgba(255,255,255,.08),
+      0 30px 60px -20px rgba(0,0,0,.6);
+    aspect-ratio: 820/600;
+    position: relative;
+  }
+  .device-caption {
+    font-size: 13px;
+    opacity: .5;
+    text-align: center;
+    margin-top: 10px;
+    font-family: 'Heebo', sans-serif;
+  }
+
+  /* ============================================================
+     OPTION A — "נייר" — Paper Recipe Book
+     Cream paper · deep ink · saffron accent · Frank Ruhl Libre + Heebo
+     Quiet, refined, magazine-like
+     ============================================================ */
+  .paper {
+    background: #F7F2E8;
+    color: #1C1A16;
+    font-family: 'Heebo', sans-serif;
+    position: relative;
+    overflow: hidden;
+    height: 100%;
+  }
+  .paper::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/></filter><rect width='200' height='200' filter='url(%23n)' opacity='.35'/></svg>");
+    mix-blend-mode: multiply;
+    opacity: .12;
+    pointer-events: none;
+  }
+  .paper .screen {
+    position: relative;
+    height: 100%;
+    overflow: auto;
+    padding: 40px 48px;
+  }
+  .paper .top {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    border-bottom: 1px solid #1C1A16;
+    padding-bottom: 16px;
+    margin-bottom: 24px;
+  }
+  .paper .wordmark {
+    font-family: 'Frank Ruhl Libre', serif;
+    font-weight: 700;
+    font-size: 28px;
+    letter-spacing: -.01em;
+  }
+  .paper .kicker {
+    font-size: 11px;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    opacity: .6;
+  }
+  .paper .search {
+    width: 100%;
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid #1C1A16;
+    padding: 14px 0 14px 40px;
+    font-family: 'Heebo', sans-serif;
+    font-size: 18px;
+    color: #1C1A16;
+    direction: rtl;
+    text-align: right;
+    outline: none;
+    margin-bottom: 24px;
+  }
+  .paper .search::placeholder { color: #1C1A16; opacity: .45; }
+  .paper .list { list-style: none; }
+  .paper .list li {
+    padding: 18px 0;
+    border-bottom: 1px solid rgba(28,26,22,.15);
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 24px;
+  }
+  .paper .list li:last-child { border-bottom: none; }
+  .paper .list .t {
+    font-family: 'Frank Ruhl Libre', serif;
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 1.2;
+  }
+  .paper .list .meta {
+    font-size: 13px;
+    opacity: .55;
+    white-space: nowrap;
+  }
+  .paper .list .new .t::before {
+    content: '';
+    display: inline-block;
+    width: 6px; height: 6px;
+    background: #C8863C;
+    border-radius: 50%;
+    margin-left: 10px;
+    vertical-align: middle;
+  }
+
+  /* Paper — recipe detail */
+  .paper .detail .back {
+    font-size: 14px;
+    opacity: .55;
+    margin-bottom: 18px;
+    display: inline-block;
+    text-decoration: none;
+    color: inherit;
+  }
+  .paper .detail h1 {
+    font-family: 'Frank Ruhl Libre', serif;
+    font-weight: 700;
+    font-size: 44px;
+    line-height: 1.05;
+    letter-spacing: -.02em;
+    margin-bottom: 6px;
+  }
+  .paper .detail .sub {
+    font-size: 13px;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    opacity: .55;
+    margin-bottom: 30px;
+    display: block;
+  }
+  .paper .detail h2 {
+    font-family: 'Frank Ruhl Libre', serif;
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: .3em;
+    text-transform: uppercase;
+    margin: 28px 0 14px;
+    color: #C8863C;
+  }
+  .paper .detail ul, .paper .detail ol {
+    list-style-position: inside;
+    padding-right: 0;
+  }
+  .paper .detail ul { list-style-type: none; }
+  .paper .detail ul li {
+    padding: 6px 0 6px 18px;
+    position: relative;
+    font-size: 17px;
+  }
+  .paper .detail ul li::before {
+    content: '·';
+    position: absolute;
+    right: 0; top: 2px;
+    font-size: 28px;
+    color: #C8863C;
+    line-height: 1;
+  }
+  .paper .detail ol {
+    counter-reset: step;
+    list-style: none;
+  }
+  .paper .detail ol li {
+    counter-increment: step;
+    padding: 10px 0 10px 40px;
+    position: relative;
+    font-size: 18px;
+    line-height: 1.65;
+  }
+  .paper .detail ol li::before {
+    content: counter(step);
+    position: absolute;
+    right: 0; top: 12px;
+    font-family: 'Frank Ruhl Libre', serif;
+    font-weight: 700;
+    font-size: 22px;
+    color: #C8863C;
+    width: 24px;
+  }
+
+  /* ============================================================
+     OPTION B — "שוק" — Editorial / Bold / Magazine
+     Stark ivory · terracotta · ink · Rubik (condensed bold)
+     Punchy, oversized numerals, block-color section headers
+     ============================================================ */
+  .editorial {
+    background: #FBF9F4;
+    color: #1A1A1A;
+    font-family: 'Rubik', sans-serif;
+    height: 100%;
+    overflow: hidden;
+    position: relative;
+  }
+  .editorial .screen {
+    height: 100%;
+    overflow: auto;
+    padding: 0;
+  }
+  .editorial .top {
+    background: #B63E22;
+    color: #FBF9F4;
+    padding: 28px 40px 22px;
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+  }
+  .editorial .wordmark {
+    font-family: 'Rubik', sans-serif;
+    font-weight: 900;
+    font-size: 40px;
+    letter-spacing: -.03em;
+    line-height: .9;
+  }
+  .editorial .wordmark em {
+    font-style: normal;
+    font-weight: 300;
+    font-size: .55em;
+    letter-spacing: .2em;
+    display: block;
+    text-transform: uppercase;
+    margin-top: 4px;
+    opacity: .85;
+  }
+  .editorial .count {
+    font-family: 'Rubik', sans-serif;
+    font-weight: 900;
+    font-size: 64px;
+    line-height: .9;
+    letter-spacing: -.03em;
+  }
+  .editorial .search-wrap {
+    background: #1A1A1A;
+    padding: 0 40px;
+  }
+  .editorial .search {
+    width: 100%;
+    background: transparent;
+    border: none;
+    padding: 22px 0;
+    font-family: 'Rubik', sans-serif;
+    font-weight: 500;
+    font-size: 20px;
+    color: #FBF9F4;
+    direction: rtl;
+    outline: none;
+  }
+  .editorial .search::placeholder { color: #FBF9F4; opacity: .45; }
+  .editorial .list {
+    list-style: none;
+    padding: 0 40px;
+  }
+  .editorial .list li {
+    padding: 22px 0;
+    border-bottom: 2px solid #1A1A1A;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 20px;
+  }
+  .editorial .list li:last-child { border-bottom: 6px solid #1A1A1A; }
+  .editorial .list .n {
+    font-family: 'Rubik', sans-serif;
+    font-weight: 900;
+    font-size: 40px;
+    color: #B63E22;
+    line-height: .9;
+    letter-spacing: -.04em;
+    font-variant-numeric: tabular-nums;
+  }
+  .editorial .list .t {
+    font-family: 'Rubik', sans-serif;
+    font-weight: 700;
+    font-size: 22px;
+    letter-spacing: -.01em;
+  }
+  .editorial .list .t em {
+    font-style: normal;
+    display: block;
+    font-size: 13px;
+    font-weight: 400;
+    opacity: .55;
+    margin-top: 2px;
+  }
+  .editorial .list .meta {
+    font-size: 13px;
+    opacity: .55;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Editorial detail */
+  .editorial .detail {
+    padding: 0;
+  }
+  .editorial .detail .hero {
+    background: #B63E22;
+    color: #FBF9F4;
+    padding: 32px 40px 40px;
+  }
+  .editorial .detail .back {
+    font-size: 13px;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    opacity: .8;
+    text-decoration: none;
+    color: inherit;
+    display: inline-block;
+    margin-bottom: 18px;
+  }
+  .editorial .detail h1 {
+    font-family: 'Rubik', sans-serif;
+    font-weight: 900;
+    font-size: 52px;
+    line-height: .95;
+    letter-spacing: -.03em;
+  }
+  .editorial .detail .sub {
+    margin-top: 10px;
+    font-size: 13px;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    opacity: .85;
+  }
+  .editorial .detail .body {
+    padding: 28px 40px 60px;
+  }
+  .editorial .detail h2 {
+    font-family: 'Rubik', sans-serif;
+    font-weight: 900;
+    font-size: 13px;
+    letter-spacing: .3em;
+    text-transform: uppercase;
+    background: #1A1A1A;
+    color: #FBF9F4;
+    display: inline-block;
+    padding: 6px 12px;
+    margin: 24px 0 14px;
+  }
+  .editorial .detail ul { list-style: none; padding: 0; }
+  .editorial .detail ul li {
+    padding: 8px 0;
+    border-bottom: 1px dashed rgba(26,26,26,.2);
+    font-size: 17px;
+    font-weight: 500;
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+  }
+  .editorial .detail ul li:last-child { border-bottom: none; }
+  .editorial .detail ol {
+    list-style: none;
+    counter-reset: step;
+    padding: 0;
+  }
+  .editorial .detail ol li {
+    counter-increment: step;
+    padding: 16px 0 16px 56px;
+    position: relative;
+    font-size: 18px;
+    line-height: 1.55;
+    border-bottom: 1px solid rgba(26,26,26,.08);
+  }
+  .editorial .detail ol li::before {
+    content: counter(step, decimal);
+    position: absolute;
+    right: 0; top: 14px;
+    font-family: 'Rubik', sans-serif;
+    font-weight: 900;
+    font-size: 32px;
+    color: #B63E22;
+    letter-spacing: -.03em;
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* ============================================================
+     OPTION C — "זית" — Warm Mediterranean / Soft
+     Warm off-white · olive · burnt orange · Noto Serif Hebrew + Assistant
+     Rounded, generous, softer, slightly playful
+     ============================================================ */
+  .olive {
+    background: #F4EFE3;
+    color: #2B3222;
+    font-family: 'Assistant', sans-serif;
+    height: 100%;
+    overflow: hidden;
+    position: relative;
+  }
+  .olive .screen {
+    height: 100%;
+    overflow: auto;
+    padding: 36px 36px 48px;
+  }
+  .olive .top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 22px;
+  }
+  .olive .wordmark {
+    font-family: 'Noto Serif Hebrew', serif;
+    font-weight: 700;
+    font-size: 30px;
+    color: #2B3222;
+    letter-spacing: -.01em;
+  }
+  .olive .badge {
+    background: #6F7A46;
+    color: #F4EFE3;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: .05em;
+    padding: 6px 12px;
+    border-radius: 999px;
+  }
+  .olive .search-wrap {
+    position: relative;
+    margin-bottom: 26px;
+  }
+  .olive .search {
+    width: 100%;
+    background: #FFFDF7;
+    border: 1.5px solid #2B3222;
+    border-radius: 18px;
+    padding: 16px 52px 16px 20px;
+    font-family: 'Assistant', sans-serif;
+    font-weight: 500;
+    font-size: 17px;
+    color: #2B3222;
+    direction: rtl;
+    outline: none;
+    box-shadow: 0 2px 0 #2B3222;
+  }
+  .olive .search:focus { box-shadow: 0 4px 0 #D06A2C; border-color: #D06A2C; }
+  .olive .search::placeholder { color: #2B3222; opacity: .55; }
+  .olive .search-wrap::before {
+    content: '⌕';
+    position: absolute;
+    right: 18px; top: 50%;
+    transform: translateY(-50%);
+    font-size: 20px;
+    opacity: .6;
+  }
+  .olive .list { list-style: none; display: grid; gap: 12px; }
+  .olive .list li {
+    background: #FFFDF7;
+    border: 1.5px solid #2B3222;
+    border-radius: 18px;
+    padding: 18px 22px;
+    box-shadow: 0 3px 0 #2B3222;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+  }
+  .olive .list li.fresh {
+    border-color: #D06A2C;
+    box-shadow: 0 3px 0 #D06A2C;
+  }
+  .olive .list .t {
+    font-family: 'Noto Serif Hebrew', serif;
+    font-weight: 700;
+    font-size: 21px;
+    letter-spacing: -.01em;
+  }
+  .olive .list .t em {
+    font-style: normal;
+    display: block;
+    font-family: 'Assistant', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    opacity: .6;
+    margin-top: 2px;
+  }
+  .olive .list .meta {
+    font-size: 12px;
+    opacity: .6;
+    white-space: nowrap;
+    text-align: left;
+  }
+
+  /* Olive detail */
+  .olive .detail .back {
+    font-size: 14px;
+    font-weight: 600;
+    opacity: .7;
+    text-decoration: none;
+    color: inherit;
+    margin-bottom: 12px;
+    display: inline-block;
+  }
+  .olive .detail .title-card {
+    background: #FFFDF7;
+    border: 1.5px solid #2B3222;
+    border-radius: 22px;
+    box-shadow: 0 4px 0 #2B3222;
+    padding: 26px 26px 24px;
+    margin-bottom: 24px;
+  }
+  .olive .detail h1 {
+    font-family: 'Noto Serif Hebrew', serif;
+    font-weight: 900;
+    font-size: 40px;
+    line-height: 1.1;
+    letter-spacing: -.02em;
+  }
+  .olive .detail .stats {
+    display: flex;
+    gap: 18px;
+    margin-top: 12px;
+    font-size: 13px;
+    font-weight: 600;
+    opacity: .7;
+  }
+  .olive .detail .stats span + span::before {
+    content: '·';
+    margin-left: 18px;
+    margin-right: 0;
+  }
+  .olive .detail h2 {
+    font-family: 'Noto Serif Hebrew', serif;
+    font-weight: 700;
+    font-size: 20px;
+    margin: 22px 0 12px;
+    color: #6F7A46;
+  }
+  .olive .detail ul { list-style: none; padding: 0; }
+  .olive .detail ul li {
+    padding: 8px 0 8px 26px;
+    position: relative;
+    font-size: 16px;
+    font-weight: 500;
+  }
+  .olive .detail ul li::before {
+    content: '';
+    position: absolute;
+    right: 4px; top: 16px;
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: #6F7A46;
+  }
+  .olive .detail ol {
+    list-style: none;
+    counter-reset: step;
+    padding: 0;
+  }
+  .olive .detail ol li {
+    counter-increment: step;
+    padding: 14px 50px 14px 16px;
+    position: relative;
+    font-size: 17px;
+    line-height: 1.55;
+    background: #FFFDF7;
+    border: 1.5px solid #2B3222;
+    border-radius: 14px;
+    margin-bottom: 8px;
+  }
+  .olive .detail ol li::before {
+    content: counter(step);
+    position: absolute;
+    right: -1px; top: -1px;
+    width: 38px; height: 38px;
+    background: #D06A2C;
+    color: #FFFDF7;
+    border: 1.5px solid #2B3222;
+    border-top-right-radius: 14px;
+    border-bottom-left-radius: 14px;
+    font-family: 'Noto Serif Hebrew', serif;
+    font-weight: 700;
+    font-size: 18px;
+    display: grid;
+    place-items: center;
+  }
+
+  /* mobile tweaks */
+  @media (max-width: 600px) {
+    .paper .screen, .olive .screen { padding: 24px; }
+    .editorial .top, .editorial .list, .editorial .detail .hero, .editorial .detail .body { padding-left: 24px; padding-right: 24px; }
+    .paper .detail h1, .editorial .detail h1, .olive .detail h1 { font-size: 34px; }
+  }
+</style>
+</head>
+<body>
+<div class="chrome">
+  <header>
+    <h1>בחירת סגנון למתכונים</h1>
+    <p>שלוש הצעות סגנון לאפליקציה. כל אפשרות מוצגת עם מסך הבית (רשימת מתכונים) ומסך המתכון עצמו, לצפייה באייפד ובנייד. בחר את זו שתרצה — או ערבב.</p>
+    <p class="note">Placeholder content: recipe used is שקשוקה · will be replaced with your real data when we build.</p>
+  </header>
+
+  <!-- OPTION A -->
+  <section class="option">
+    <div class="option-label">
+      <div class="option-num">A</div>
+      <div class="option-meta">
+        <h2>נייר — Paper Recipe Book</h2>
+        <p>שקט, מעודן, כמו ספר מתכונים ישן. Frank Ruhl Libre (כותרות) + Heebo (טקסט). קרם · דיו עמוק · נגיעה של זעפרן. מינימום תנועה, מקסימום קריאה.</p>
+      </div>
+    </div>
+    <div class="device-row">
+      <div>
+        <div class="device">
+          <div class="paper">
+            <div class="screen">
+              <div class="top">
+                <div class="wordmark">מתכונים</div>
+                <div class="kicker">42 מתכונים</div>
+              </div>
+              <input class="search" placeholder="חיפוש…">
+              <ul class="list">
+                <li class="new"><span class="t">שקשוקה של שישי</span><span class="meta">לפני שעה</span></li>
+                <li><span class="t">חומוס של אמא</span><span class="meta">אתמול</span></li>
+                <li><span class="t">עוגת תפוחים הפוכה</span><span class="meta">3 ימים</span></li>
+                <li><span class="t">מג׳דרה ירושלמית</span><span class="meta">שבוע</span></li>
+                <li><span class="t">מרק עדשים כתומות</span><span class="meta">שבועיים</span></li>
+                <li><span class="t">סביח בפיתה</span><span class="meta">חודש</span></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="device-caption">רשימה · Home</div>
+      </div>
+      <div>
+        <div class="device">
+          <div class="paper">
+            <div class="screen">
+              <a class="back" href="#">← חזרה</a>
+              <div class="detail">
+                <h1>שקשוקה של שישי</h1>
+                <span class="sub">6 מצרכים · 5 שלבים</span>
+                <h2>מצרכים</h2>
+                <ul>
+                  <li>6 ביצים טריות</li>
+                  <li>1 ק״ג עגבניות בשלות</li>
+                  <li>2 פלפלים אדומים</li>
+                  <li>4 שיני שום</li>
+                  <li>1 כפית כמון · פפריקה · מלח</li>
+                  <li>צרור כוסברה טרייה</li>
+                </ul>
+                <h2>הוראות הכנה</h2>
+                <ol>
+                  <li>מחממים שמן זית במחבת רחבה ומטגנים שום עד הזהבה קלה.</li>
+                  <li>מוסיפים פלפלים קצוצים, מבשלים 5 דקות עד שהם מתרככים.</li>
+                  <li>מוסיפים עגבניות מרוסקות, תבלינים, ומבשלים 15 דקות עד שהרוטב מסמיך.</li>
+                  <li>שוברים את הביצים ישירות לרוטב, מכסים ומבשלים 5–7 דקות.</li>
+                  <li>מפזרים כוסברה טרייה ומגישים עם לחם חם.</li>
+                </ol>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="device-caption">מתכון · Detail</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- OPTION B -->
+  <section class="option">
+    <div class="option-label">
+      <div class="option-num">B</div>
+      <div class="option-meta">
+        <h2>שוק — Editorial / Bold</h2>
+        <p>שפה של מגזין אוכל. Rubik 900 בכותרות ענקיות, כתום־חום שורף, מספרי שלבים גדולים מאוד. יותר חד, יותר בועט. קריא מטורף על אייפד מרחוק.</p>
+      </div>
+    </div>
+    <div class="device-row">
+      <div>
+        <div class="device">
+          <div class="editorial">
+            <div class="screen">
+              <div class="top">
+                <div class="wordmark">מתכונים<em>Matkonim</em></div>
+                <div class="count">42</div>
+              </div>
+              <div class="search-wrap">
+                <input class="search" placeholder="חיפוש בכל המתכונים…">
+              </div>
+              <ul class="list">
+                <li><div class="n">01</div><div class="t">שקשוקה של שישי<em>6 מצרכים · 5 שלבים</em></div><div class="meta">לפני שעה</div></li>
+                <li><div class="n">02</div><div class="t">חומוס של אמא<em>8 מצרכים · 7 שלבים</em></div><div class="meta">אתמול</div></li>
+                <li><div class="n">03</div><div class="t">עוגת תפוחים הפוכה<em>10 מצרכים · 9 שלבים</em></div><div class="meta">3 ימים</div></li>
+                <li><div class="n">04</div><div class="t">מג׳דרה ירושלמית<em>5 מצרכים · 4 שלבים</em></div><div class="meta">שבוע</div></li>
+                <li><div class="n">05</div><div class="t">מרק עדשים כתומות<em>7 מצרכים · 6 שלבים</em></div><div class="meta">שבועיים</div></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="device-caption">רשימה · Home</div>
+      </div>
+      <div>
+        <div class="device">
+          <div class="editorial">
+            <div class="screen detail">
+              <div class="hero">
+                <a class="back" href="#">← חזרה</a>
+                <h1>שקשוקה של שישי</h1>
+                <div class="sub">6 מצרכים · 5 שלבים</div>
+              </div>
+              <div class="body">
+                <h2>מצרכים</h2>
+                <ul>
+                  <li>ביצים טריות<span>×6</span></li>
+                  <li>עגבניות בשלות<span>1 ק״ג</span></li>
+                  <li>פלפלים אדומים<span>×2</span></li>
+                  <li>שיני שום<span>×4</span></li>
+                  <li>כוסברה טרייה<span>צרור</span></li>
+                </ul>
+                <h2>הוראות הכנה</h2>
+                <ol>
+                  <li>מחממים שמן זית במחבת רחבה, מטגנים שום עד הזהבה.</li>
+                  <li>מוסיפים פלפלים קצוצים, מבשלים 5 דקות.</li>
+                  <li>מוסיפים עגבניות ותבלינים, מבשלים 15 דקות.</li>
+                  <li>שוברים ביצים לרוטב, מכסים, מבשלים 5–7 דקות.</li>
+                  <li>מפזרים כוסברה, מגישים עם לחם.</li>
+                </ol>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="device-caption">מתכון · Detail</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- OPTION C -->
+  <section class="option">
+    <div class="option-label">
+      <div class="option-num">C</div>
+      <div class="option-meta">
+        <h2>זית — Warm Mediterranean</h2>
+        <p>חם, מעוגל, נעים למגע. Noto Serif Hebrew (כותרות) + Assistant (טקסט). לבן־שנהב, זית, כתום־חרסינה. כרטיסים עם צל של "ניילון־עבה" — ידידותי יותר, פחות רשמי. הכי בולט ב״משחקיות״ של הסגנונות.</p>
+      </div>
+    </div>
+    <div class="device-row">
+      <div>
+        <div class="device">
+          <div class="olive">
+            <div class="screen">
+              <div class="top">
+                <div class="wordmark">מתכונים</div>
+                <div class="badge">42 מתכונים</div>
+              </div>
+              <div class="search-wrap">
+                <input class="search" placeholder="חיפוש…">
+              </div>
+              <ul class="list">
+                <li class="fresh"><div class="t">שקשוקה של שישי<em>6 מצרכים · 5 שלבים</em></div><div class="meta">לפני שעה</div></li>
+                <li><div class="t">חומוס של אמא<em>8 מצרכים · 7 שלבים</em></div><div class="meta">אתמול</div></li>
+                <li><div class="t">עוגת תפוחים הפוכה<em>10 מצרכים · 9 שלבים</em></div><div class="meta">3 ימים</div></li>
+                <li><div class="t">מג׳דרה ירושלמית<em>5 מצרכים · 4 שלבים</em></div><div class="meta">שבוע</div></li>
+                <li><div class="t">מרק עדשים כתומות<em>7 מצרכים · 6 שלבים</em></div><div class="meta">שבועיים</div></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="device-caption">רשימה · Home</div>
+      </div>
+      <div>
+        <div class="device">
+          <div class="olive">
+            <div class="screen detail">
+              <a class="back" href="#">← חזרה לרשימה</a>
+              <div class="title-card">
+                <h1>שקשוקה של שישי</h1>
+                <div class="stats"><span>6 מצרכים</span><span>5 שלבים</span><span>נפתח לפני שעה</span></div>
+              </div>
+              <h2>מצרכים</h2>
+              <ul>
+                <li>6 ביצים טריות</li>
+                <li>1 ק״ג עגבניות בשלות</li>
+                <li>2 פלפלים אדומים</li>
+                <li>4 שיני שום</li>
+                <li>צרור כוסברה טרייה</li>
+              </ul>
+              <h2>הוראות הכנה</h2>
+              <ol>
+                <li>מחממים שמן זית במחבת רחבה ומטגנים שום עד הזהבה.</li>
+                <li>מוסיפים פלפלים קצוצים, מבשלים 5 דקות.</li>
+                <li>מוסיפים עגבניות ותבלינים, מבשלים 15 דקות.</li>
+                <li>שוברים את הביצים לרוטב, מכסים ומבשלים 5–7 דקות.</li>
+              </ol>
+            </div>
+          </div>
+        </div>
+        <div class="device-caption">מתכון · Detail</div>
+      </div>
+    </div>
+  </section>
+
+</div>
+</body>
+</html>
