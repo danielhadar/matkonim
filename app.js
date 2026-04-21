@@ -192,13 +192,17 @@ const Store = {
 
   byId(id) { return this.recipes.find((r) => r.id === id); },
 
-  /** Sort by lastOpened desc; fall back to updatedAt/createdAt */
+  /** Opened recipes first (most recent on top), then alphabetical by title */
   sorted() {
     const lo = Local.getLastOpened();
     return [...this.recipes].sort((a, b) => {
-      const ka = lo[a.id] || a.updatedAt || a.createdAt || '';
-      const kb = lo[b.id] || b.updatedAt || b.createdAt || '';
-      return kb.localeCompare(ka);
+      const la = lo[a.id] || '';
+      const lb = lo[b.id] || '';
+      if (la || lb) {
+        if (la && lb) return lb.localeCompare(la);
+        return lb ? 1 : -1;
+      }
+      return a.title.localeCompare(b.title, 'he');
     });
   },
 
@@ -325,7 +329,7 @@ function renderHome() {
         <span class="meta"></span>
       `;
       $('.t', li).textContent = r.title;
-      $('.meta', li).textContent = relTimeHe(lo[r.id] || r.updatedAt || r.createdAt);
+      $('.meta', li).textContent = lo[r.id] ? relTimeHe(lo[r.id]) : '';
       li.addEventListener('click', () => {
         Local.markOpened(r.id);
         navigate(`#/r/${r.id}`);
@@ -336,6 +340,7 @@ function renderHome() {
   };
 
   search.addEventListener('input', debounce(renderList, 90));
+  wireSearchClear(view, search);
   renderList();
   mount(view);
 }
@@ -518,8 +523,23 @@ function renderAdminHome() {
   };
 
   search.addEventListener('input', debounce(renderList, 90));
+  wireSearchClear(view, search);
   renderList();
   mount(view);
+}
+
+/* ---------- search clear ---------- */
+function wireSearchClear(view, input) {
+  const btn = view.querySelector('[data-search-clear]');
+  if (!btn) return;
+  const sync = () => { btn.hidden = !input.value; };
+  input.addEventListener('input', sync);
+  btn.addEventListener('click', () => {
+    input.value = '';
+    input.dispatchEvent(new Event('input', { bubbles: true }));
+    input.focus();
+  });
+  sync();
 }
 
 /* ---------- Admin: Add / Edit ---------- */
