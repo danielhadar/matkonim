@@ -7,31 +7,7 @@
 'use strict';
 
 /* ---------- Seed (used only if data/recipes.json is unreachable, e.g. local file://) ---------- */
-const SEED = {
-  recipes: [
-    {
-      id: 'seed-shakshuka',
-      title: 'שקשוקה של שישי',
-      ingredients: [
-        '6 ביצים טריות',
-        '1 ק״ג עגבניות בשלות',
-        '2 פלפלים אדומים',
-        '4 שיני שום',
-        '1 כפית כמון · פפריקה · מלח',
-        'צרור כוסברה טרייה',
-      ],
-      instructions: [
-        'מחממים שמן זית במחבת רחבה ומטגנים שום עד הזהבה קלה.',
-        'מוסיפים פלפלים קצוצים ומבשלים 5 דקות עד שהם מתרככים.',
-        'מוסיפים עגבניות מרוסקות ותבלינים, מבשלים 15 דקות עד שהרוטב מסמיך.',
-        'שוברים את הביצים ישירות לרוטב, מכסים ומבשלים 5–7 דקות.',
-        'מפזרים כוסברה טרייה ומגישים עם לחם חם.',
-      ],
-      createdAt: '2026-04-20T08:00:00Z',
-      updatedAt: '2026-04-20T08:00:00Z',
-    },
-  ],
-};
+const SEED = { recipes: [] };
 
 /* ---------- tiny utilities ---------- */
 const $ = (sel, root = document) => root.querySelector(sel);
@@ -382,6 +358,7 @@ function renderRecipe(id) {
   for (const line of r.ingredients) {
     const d = document.createElement('div');
     d.textContent = line;
+    if (/[:：]\s*$/.test(line)) d.dataset.section = 'true';
     ing.appendChild(d);
   }
   const ol = $('[data-instructions]', view);
@@ -590,7 +567,11 @@ function renderEdit(idOrNull) {
     `;
     $('h3', previewEl).textContent = r.title || '(ללא כותרת)';
     const ingNodes = $$('.p-ing', previewEl);
-    r.ingredients.forEach((line, i) => { if (ingNodes[i]) ingNodes[i].textContent = line; });
+    r.ingredients.forEach((line, i) => {
+      if (!ingNodes[i]) return;
+      ingNodes[i].textContent = line;
+      if (/[:：]\s*$/.test(line)) ingNodes[i].dataset.section = 'true';
+    });
     const stepNodes = $$('.p-steps li', previewEl);
     r.instructions.forEach((step, i) => { if (stepNodes[i]) stepNodes[i].textContent = step; });
   };

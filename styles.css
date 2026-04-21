@@ -281,6 +281,20 @@ button { font-family: inherit; }
 }
 .ing-list > div:last-child { border-bottom: none; }
 
+/* sub-section header inside ingredients (lines ending with ":") — e.g. "לרוטב:" */
+.ing-list > div[data-section] {
+  font-family: var(--font-display, var(--font-sans));
+  font-weight: 600;
+  font-size: calc(var(--fs-ingr) * 1.02);
+  color: var(--saffron-dark);
+  letter-spacing: .02em;
+  padding-top: 16px;
+  padding-bottom: 6px;
+  border-bottom: none;
+}
+.ing-list > div[data-section] + div { border-top: 1px dashed var(--ink-20); }
+.ing-list > div[data-section]:first-child { padding-top: 8px; }
+
 /* instructions — numbered cells (C adapted to paper) */
 .steps {
   list-style: none;
@@ -510,6 +524,13 @@ button { font-family: inherit; }
 }
 .preview-body .p-ing { padding: 6px 0; font-size: 16px; border-bottom: 1px dashed var(--ink-20); }
 .preview-body .p-ing:last-child { border-bottom: none; }
+.preview-body .p-ing[data-section] {
+  font-weight: 600;
+  color: var(--saffron-dark);
+  padding-top: 12px;
+  border-bottom: none;
+}
+.preview-body .p-ing[data-section] + .p-ing { border-top: 1px dashed var(--ink-20); }
 .preview-body ol.p-steps { list-style: none; counter-reset: p; padding: 0; margin: 0; display: grid; gap: 8px; }
 .preview-body ol.p-steps li {
   counter-increment: p;
