@@ -45,18 +45,16 @@ Based on a quick survey of the ecosystem, here's my recommendation and why:
 ### 3.1 Home / Recipe list (reader)
 - Tall search input pinned to the top (auto-focused? debatable — see open questions)
 - Below: a vertical list of recipe cards
-  - Each card: recipe title, a subtle second line (first ingredient, or "X מצרכים · Y שלבים")
+  - Each card: recipe title only
   - Tapping the card opens the recipe
-- Sort: by **`lastOpenedAt` DESC** (most recently viewed first), falling back to `createdAt` for never-opened recipes
-- `lastOpenedAt` is **per device** (stored in `localStorage`). Your "recently used" order is independent from your wife's. This is a feature, not a bug — avoids a commit per recipe view.
+- Sort: alphabetical by title (Hebrew collation).
 
 ### 3.2 Recipe view (reader)
 - Big title at top (serif, display-weight)
 - Two sections, RTL:
-  - **מצרכים** — bulleted list. Tapping a line toggles a strike-through (local-only, non-persisted — purely for cooking in progress).
+  - **מצרכים** — bulleted list.
   - **הוראות הכנה** — numbered list. Each step has generous spacing; large, readable body font.
 - Back button (top-right in RTL) returns to list
-- Side effect: opening a recipe sets `lastOpenedAt[recipeId] = now()` in localStorage
 
 ### 3.3 Search (reader)
 - Live filter as you type (debounced ~100ms)
@@ -138,7 +136,6 @@ No schema versioning needed; if it ever changes we migrate by hand.
 
 ### 4.4 Per-device state (localStorage, not synced)
 ```
-matkonim.lastOpened     → { [recipeId]: isoTimestamp }
 matkonim.adminUnlocked  → isoTimestamp (30d sliding)
 matkonim.githubToken    → string (PAT, only on admin devices)
 ```

@@ -89,8 +89,7 @@ Just open `matkonim.danielhadar.com` — no setup, no PIN, no token needed. She 
 
 ### Reader
 - Fetches `data/recipes.json` directly from GH Pages (CDN-cached, cache-busted per load).
-- Sorts by `lastOpened[id]` from `localStorage`, falling back to `updatedAt`/`createdAt`.
-- Tapping a recipe opens it and updates that device's `lastOpened`.
+- Sorts alphabetically by title (Hebrew collation).
 - Search filters live across title + ingredients + instructions. Nikud-insensitive.
 
 ### Admin
@@ -101,7 +100,6 @@ Just open `matkonim.danielhadar.com` — no setup, no PIN, no token needed. She 
 
 ### What's in `localStorage`
 ```
-matkonim.lastOpened       — { recipeId: iso-timestamp } per device, never synced
 matkonim.pin              — the 4-digit PIN (plain)
 matkonim.unlockedUntil    — ms timestamp, 30-day sliding expiry
 matkonim.gh.owner         — "danielhadar"
@@ -136,7 +134,6 @@ Go to github.com/settings/tokens → find the token → **Revoke**. Now that dev
 ## Future (not in v0)
 
 - Photos per recipe
-- Categories / tags
 - Import/bulk migration tool (separate task — see SPEC.md §10.8)
 - Ingredient check-off with persistence
 - Dark mode

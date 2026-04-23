@@ -31,24 +31,6 @@ function toast(msg, opts = {}) {
   }, opts.duration || 2200);
 }
 
-function relTimeHe(iso) {
-  if (!iso) return '';
-  const ms = Date.now() - new Date(iso).getTime();
-  if (ms < 0) return 'עכשיו';
-  const m = Math.floor(ms / 60000);
-  if (m < 1) return 'עכשיו';
-  if (m < 60) return m === 1 ? 'לפני דקה' : `לפני ${m} דקות`;
-  const h = Math.floor(m / 60);
-  if (h < 24) return h === 1 ? 'לפני שעה' : `לפני ${h} שעות`;
-  const d = Math.floor(h / 24);
-  if (d === 1) return 'אתמול';
-  if (d < 7) return `לפני ${d} ימים`;
-  if (d < 30) { const w = Math.floor(d / 7); return w === 1 ? 'לפני שבוע' : `לפני ${w} שבועות`; }
-  if (d < 365) { const mo = Math.floor(d / 30); return mo === 1 ? 'לפני חודש' : `לפני ${mo} חודשים`; }
-  const y = Math.floor(d / 365);
-  return y === 1 ? 'לפני שנה' : `לפני ${y} שנים`;
-}
-
 // Normalize text for search: lowercase + strip Hebrew nikud (points)
 function norm(s) {
   return (s || '')
@@ -60,7 +42,6 @@ function norm(s) {
 
 /* ---------- local device state ---------- */
 const LS = {
-  lastOpened:    'matkonim.lastOpened',
   pin:           'matkonim.pin',          // plain 4-digit; this is a speedbump, not crypto
   unlockedUntil: 'matkonim.unlockedUntil',
   ghOwner:       'matkonim.gh.owner',
@@ -69,14 +50,6 @@ const LS = {
 };
 
 const Local = {
-  getLastOpened() {
-    try { return JSON.parse(localStorage.getItem(LS.lastOpened) || '{}'); } catch { return {}; }
-  },
-  markOpened(id) {
-    const map = Local.getLastOpened();
-    map[id] = new Date().toISOString();
-    localStorage.setItem(LS.lastOpened, JSON.stringify(map));
-  },
   getPin()        { return localStorage.getItem(LS.pin); },
   setPin(pin)     { localStorage.setItem(LS.pin, pin); },
   clearPin()      { localStorage.removeItem(LS.pin); },
@@ -192,18 +165,9 @@ const Store = {
 
   byId(id) { return this.recipes.find((r) => r.id === id); },
 
-  /** Opened recipes first (most recent on top), then alphabetical by title */
+  /** Alphabetical by title (Hebrew collation) */
   sorted() {
-    const lo = Local.getLastOpened();
-    return [...this.recipes].sort((a, b) => {
-      const la = lo[a.id] || '';
-      const lb = lo[b.id] || '';
-      if (la || lb) {
-        if (la && lb) return lb.localeCompare(la);
-        return lb ? 1 : -1;
-      }
-      return a.title.localeCompare(b.title, 'he');
-    });
+    return [...this.recipes].sort((a, b) => a.title.localeCompare(b.title, 'he'));
   },
 
   /** case/nikud-insensitive substring match across title + ingredients + instructions */
@@ -317,23 +281,18 @@ function renderHome() {
     const q = search.value;
     const results = Store.search(q);
     list.innerHTML = '';
-    countEl.textContent = `${Store.recipes.length} מתכונים`;
+    countEl.textContent =
+      results.length === 0 ? '' :
+      results.length === 1 ? 'מתכון אחד' :
+      `${results.length} מתכונים`;
     if (!results.length) { empty.hidden = false; return; }
     empty.hidden = true;
-    const lo = Local.getLastOpened();
     const frag = document.createDocumentFragment();
     for (const r of results) {
       const li = document.createElement('li');
-      li.innerHTML = `
-        <span class="t"></span>
-        <span class="meta"></span>
-      `;
+      li.innerHTML = `<span class="t"></span>`;
       $('.t', li).textContent = r.title;
-      $('.meta', li).textContent = lo[r.id] ? relTimeHe(lo[r.id]) : '';
-      li.addEventListener('click', () => {
-        Local.markOpened(r.id);
-        navigate(`#/r/${r.id}`);
-      });
+      li.addEventListener('click', () => navigate(`#/r/${r.id}`));
       frag.appendChild(li);
     }
     list.appendChild(frag);
@@ -352,7 +311,6 @@ function renderRecipe(id) {
     toast('מתכון לא נמצא', { error: true });
     return navigate('#/', { replace: true });
   }
-  Local.markOpened(r.id);
 
   const view = cloneTpl('tpl-recipe');
   $('[data-title]', view).textContent = r.title;
@@ -456,7 +414,7 @@ function renderLockScreen({ mode }) {
   });
 
   forgot.addEventListener('click', () => {
-    if (!confirm('למחוק את כל הנתונים המקומיים (PIN, טוקן, נפתחו לאחרונה)? אי אפשר לשחזר טוקן — תצטרך ליצור חדש ב־GitHub.')) return;
+    if (!confirm('למחוק את כל הנתונים המקומיים (PIN, טוקן)? אי אפשר לשחזר טוקן — תצטרך ליצור חדש ב־GitHub.')) return;
     Object.values(LS).forEach((k) => localStorage.removeItem(k));
     toast('נמחק');
     navigate('#/', { replace: true });
@@ -548,6 +506,7 @@ function renderEdit(idOrNull) {
   const view = cloneTpl('tpl-admin-edit');
   $('[data-heading]', view).textContent = existing ? 'עריכת מתכון' : 'מתכון חדש';
   const titleEl = $('[data-title]', view);
+  const catEl = $('[data-category]', view);
   const ingEl = $('[data-ingredients]', view);
   const insEl = $('[data-instructions]', view);
   const previewEl = $('[data-preview]', view);
@@ -556,6 +515,7 @@ function renderEdit(idOrNull) {
 
   if (existing) {
     titleEl.value = existing.title;
+    catEl.value = existing.category || '';
     ingEl.value = existing.ingredients.join('\n');
     insEl.value = existing.instructions.join('\n');
     delBtn.hidden = false;
@@ -566,6 +526,7 @@ function renderEdit(idOrNull) {
   const buildRecipe = () => ({
     id: existing ? existing.id : newId,
     title: titleEl.value.trim(),
+    category: catEl.value,
     ingredients: splitLines(ingEl.value),
     instructions: splitLines(insEl.value),
     createdAt: existing ? existing.createdAt : new Date().toISOString(),
@@ -614,6 +575,7 @@ function renderEdit(idOrNull) {
     ev.preventDefault();
     const r = buildRecipe();
     if (!r.title) return toast('חסרה כותרת', { error: true });
+    if (!r.category) return toast('חסרה קטגוריה', { error: true });
     if (!r.ingredients.length) return toast('חסרים מצרכים', { error: true });
     if (!r.instructions.length) return toast('חסרות הוראות', { error: true });
 
@@ -698,6 +660,8 @@ function debounce(fn, ms) {
 
 /* ---------- boot ---------- */
 (async function boot() {
+  // Cleanup: the last-opened feature was removed; drop the leftover key from old installs.
+  localStorage.removeItem('matkonim.lastOpened');
   try {
     // Reader can always see the public JSON. Admin will reload via API on entry.
     const data = await loadRecipesFromCdn();
