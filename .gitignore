@@ -3,4 +3,5 @@ node_modules/
 *.log
 migration/
 .claude/
+CLAUDE.md
 recipe_titles.md
