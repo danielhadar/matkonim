@@ -662,6 +662,10 @@ function debounce(fn, ms) {
 (async function boot() {
   // Cleanup: the last-opened feature was removed; drop the leftover key from old installs.
   localStorage.removeItem('matkonim.lastOpened');
+  // Register service worker so the iOS Home Screen PWA picks up deploys.
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('./sw.js').then((reg) => reg.update()).catch(() => {});
+  }
   try {
     // Reader can always see the public JSON. Admin will reload via API on entry.
     const data = await loadRecipesFromCdn();
