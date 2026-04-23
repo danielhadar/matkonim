@@ -111,6 +111,7 @@ Based on a quick survey of the ecosystem, here's my recommendation and why:
     {
       "id": "c7a4...",           // uuid v4
       "title": "חומוס של אמא",
+      "category": "mains",       // enum — see below
       "ingredients": ["1 ק\"ג גרגרי חומוס", "..."],
       "instructions": ["משרים לילה שלם במים", "..."],
       "createdAt": "2026-04-20T08:12:00Z",
@@ -119,6 +120,20 @@ Based on a quick survey of the ecosystem, here's my recommendation and why:
   ]
 }
 ```
+
+`category` is a required string, one of a fixed enum. Each recipe belongs to exactly one category.
+
+| Value | Hebrew label |
+|---|---|
+| `salads` | סלטים |
+| `soups` | מרקים |
+| `starters` | מנות ראשונות |
+| `mains` | עיקריות |
+| `baked` | מאפים ולחמים |
+| `desserts` | קינוחים |
+| `breakfast` | ארוחת בוקר |
+| `sauces` | רטבים |
+
 No schema versioning needed; if it ever changes we migrate by hand.
 
 ### 4.4 Per-device state (localStorage, not synced)

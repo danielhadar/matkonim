@@ -3,6 +3,7 @@
     {
       "id": "doc-salat-yerukim-adashim-batata",
       "title": "סלט ירוקים, עדשים שחורות ובטטה",
+      "category": "salads",
       "ingredients": [
         "בטטה בינונית חתוכה לקוביות — עם מעט שמן זית בתנור, 200 מעלות לחצי שעה",
         "עדשים שחורות מושרות ומבושלות קלות (לא חובה)",
@@ -30,6 +31,7 @@
     {
       "id": "doc-salat-humus-avokado",
       "title": "סלט חומוס ואבוקדו",
+      "category": "salads",
       "ingredients": [
         "חסה",
         "1.5 כוסות עלי תרד",
@@ -59,6 +61,7 @@
     {
       "id": "doc-salat-gezer-harif",
       "title": "סלט גזר חריף",
+      "category": "salads",
       "ingredients": [
         "6 גזרים קלופים",
         "3 שיני שום כתושות",
@@ -81,6 +84,7 @@
     {
       "id": "doc-salat-dlaat-spageti",
       "title": "סלט דלעת ספגטי תאילנדי",
+      "category": "salads",
       "ingredients": [
         "תכולה של חצי דלעת ספגטי (בתנור על 200 מעלות חצי שעה כל צד)",
         "חצי צרור כוסברה",
@@ -105,6 +109,7 @@
     {
       "id": "doc-salat-kishu-shesek",
       "title": "סלט קישוא ושסק",
+      "category": "salads",
       "ingredients": [
         "2 קישואים בינוניים חתוכים לקוביות",
         "4 שסק, קלופים, חתוכים לאורכם ל-8",
@@ -124,6 +129,7 @@
     {
       "id": "doc-salat-zukini-betahmitz",
       "title": "סלט זוקיני בתחמיץ",
+      "category": "salads",
       "ingredients": [
         "4 קישואי זוקיני, פרוסים דק בעזרת קולפן",
         "רבע כוס שמן זית",
@@ -142,6 +148,7 @@
     {
       "id": "doc-salat-sheuit-shhora-tiras",
       "title": "סלט שעועית שחורה ותירס",
+      "category": "salads",
       "ingredients": [
         "פחית שעועית שחורה",
         "פחית תירס",
@@ -170,6 +177,7 @@
     {
       "id": "doc-chimichurri-alei-gezer",
       "title": "צ'ימיצ'ורי עלי גזר",
+      "category": "sauces",
       "ingredients": [
         "צרור עלי גזר טריים, ללא הגבעולים (כ-100 גרם)",
         "⅓ כוס שמן זית",
@@ -185,6 +193,7 @@
     {
       "id": "doc-marak-grisim",
       "title": "מרק גריסים של סבתא שולה",
+      "category": "soups",
       "ingredients": [
         "אפונה יבשה (ירוקה וצהובה)",
         "כוסמת ירוקה",
@@ -206,6 +215,7 @@
     {
       "id": "doc-marak-yarok",
       "title": "מרק ירוק של סבתא שולה",
+      "category": "soups",
       "ingredients": [
         "במיה",
         "אפונה קפואה",
@@ -227,6 +237,7 @@
     {
       "id": "doc-marak-tiras-udi",
       "title": "מרק תירס של אודי",
+      "category": "soups",
       "ingredients": [
         "כף שמן זית",
         "בצל קצוץ גדול",
@@ -253,6 +264,7 @@
     {
       "id": "doc-marak-katom",
       "title": "מרק כתום",
+      "category": "soups",
       "ingredients": [
         "דלעות שונות",
         "בטטה",
@@ -274,6 +286,7 @@
     {
       "id": "doc-vichyssoise",
       "title": "וישיסואז קישואים ותפוחי אדמה",
+      "category": "soups",
       "ingredients": [
         "3 כפות שמן זית",
         "1 בצל לבן קצוץ",
@@ -299,6 +312,7 @@
     {
       "id": "doc-orez-betanur",
       "title": "אורז בתנור",
+      "category": "mains",
       "ingredients": [
         "2 כוסות אורז בסמטי",
         "1 בצל קצוץ",
@@ -320,6 +334,7 @@
     {
       "id": "doc-hamin-tzimhoni",
       "title": "חמין צמחוני",
+      "category": "mains",
       "ingredients": [
         "חצי כוס גרגירי חומוס",
         "חצי כוס גרעיני חיטה",
@@ -351,6 +366,7 @@
     {
       "id": "doc-tavshil-humus-yerakot",
       "title": "תבשיל חומוס וירקות",
+      "category": "mains",
       "ingredients": [
         "בצל גדול קצוץ",
         "2-3 שיני שום, חצויות",
@@ -375,6 +391,7 @@
     {
       "id": "doc-sheuit-yeruka-shum-limon",
       "title": "שעועית ירוקה מוקפצת בשום ולימון",
+      "category": "mains",
       "ingredients": [
         "500 גרם שעועית ירוקה טרייה",
         "2-3 שיני שום, כתושות, קצוצות או מגורדות בפומפייה דקה (אפשר גם יותר שום!)",
@@ -402,6 +419,7 @@
     {
       "id": "doc-dlaat-memulaa",
       "title": "דלעת ממולאת ברטטוי",
+      "category": "mains",
       "ingredients": [
         "דלעת ספגטי / יפנית / לבנה בינונית",
         "קישוא חתוך לקוביות קטנות",
@@ -423,6 +441,7 @@
     {
       "id": "doc-tavnit-hatzil-tofu-anavim",
       "title": "תבנית חציל, טופו וענבים",
+      "category": "mains",
       "ingredients": [
         "2-3 חצילים חתוכים לקוביות גדולות",
         "חבילת טופו חתוכה לקוביות",
@@ -447,6 +466,7 @@
     {
       "id": "doc-sheuit-lima",
       "title": "שעועית לימה",
+      "category": "mains",
       "ingredients": [
         "2 כוסות שעועית לימה, מושרות ל-24 שעות",
         "ענף מרווה",
@@ -466,6 +486,7 @@
     {
       "id": "doc-sir-betzalim-memulaim",
       "title": "סיר בצלים ממולאים",
+      "category": "mains",
       "ingredients": [
         "5-6 בצלים לבנים גדולים מאוד (עדיפים עגולים ונוחים לקילוף)",
         "למילוי:",
@@ -513,6 +534,7 @@
     {
       "id": "doc-yerukim-mash",
       "title": "ירוקים ומש",
+      "category": "mains",
       "ingredients": [
         "חצי כוס מש אחרי השרייה והנבטה",
         "ירוקים: אפונה קפואה, קישוא, מנגולד, תרד, קייל (בלי הגבעול), בוקצ׳וי, כרוב"
@@ -528,6 +550,7 @@
     {
       "id": "doc-brusketa-batata",
       "title": "ברוסקטת בטטה ועגבניות שרי",
+      "category": "starters",
       "ingredients": [
         "פרוסות בטטה בעובי חצי ס״מ",
         "לסלט שעל הבטטה:",
@@ -547,6 +570,7 @@
     {
       "id": "doc-ktzitzot-yerek-yeladim",
       "title": "קציצות ירק לילדים",
+      "category": "mains",
       "ingredients": [
         "1 תפוח אדמה גדול מבושל",
         "2 קישואים מבושלים",
@@ -571,6 +595,7 @@
     {
       "id": "doc-lehem-bira",
       "title": "לחם בירה",
+      "category": "baked",
       "ingredients": [
         "2 אריזות קטנות של קמח תופח",
         "חופן (נדיב) שבבי בצל מיובש",
@@ -591,6 +616,7 @@
     {
       "id": "doc-lehem-kinoa-selek",
       "title": "לחם קינואה סלק",
+      "category": "baked",
       "ingredients": [
         "כוס וחצי קינואה וחצי כוס עדשים כתומות, מושרות ביחד במים למשך הלילה",
         "כוס מים",
@@ -616,6 +642,7 @@
     {
       "id": "doc-ugiot-chocochips-ela",
       "title": "עוגיות שוקולד צ'יפס המפורסמות של אלה (קריספי)",
+      "category": "desserts",
       "ingredients": [
         "350 גרם קמח תופח (לנסות בלי אבקת אפייה)",
         "200 גרם חמאה",
@@ -641,6 +668,7 @@
     {
       "id": "doc-kaduri-energia",
       "title": "כדורי אנרגיה (קרוטית)",
+      "category": "desserts",
       "ingredients": [
         "3.5 כוסות קוואקר להכנה מהירה",
         "1 כוס קוקוס קלוי",
@@ -663,6 +691,7 @@
     {
       "id": "doc-daisat-boker",
       "title": "דייסת בוקר",
+      "category": "breakfast",
       "ingredients": [
         "כוס וחצי קינואה",
         "חצי כוס דוחן",
@@ -690,6 +719,7 @@
     {
       "id": "doc-crumble-tapuhim-horpi",
       "title": "קרמבל תפוחים חורפי",
+      "category": "desserts",
       "ingredients": [
         "לפירורים:",
         "1 כוס קמח",
@@ -718,6 +748,7 @@
     {
       "id": "doc-gratin-tapuhei-adama-tivoni",
       "title": "גראטן תפוחי אדמה מוקרמים טבעוני",
+      "category": "mains",
       "ingredients": [
         "8-9 תפוחי אדמה יפים קלופים",
         "1 כוס קרם קוקוס",
