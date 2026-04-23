@@ -194,10 +194,77 @@ button { font-family: inherit; }
 .search-clear:focus-visible { outline: 2px solid var(--saffron); outline-offset: 2px; }
 .search-clear[hidden] { display: none; }
 
+/* ---------- category chip rail ---------- */
+.chip-rail {
+  position: sticky;
+  top: 0;
+  z-index: 3;
+  display: flex;
+  gap: 8px;
+  padding: 10px var(--page-pad-x) 12px;
+  margin: 0 calc(-1 * var(--page-pad-x)) 2px;
+  background: var(--paper);
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: none;
+  direction: rtl;
+  border-bottom: 1px solid var(--ink-10);
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+}
+.chip-rail::-webkit-scrollbar { display: none; }
+.chip {
+  flex-shrink: 0;
+  padding: 8px 16px;
+  border-radius: 999px;
+  border: 1px solid var(--ink);
+  background: transparent;
+  font-size: 14px;
+  font-family: inherit;
+  color: var(--ink);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 150ms ease, color 150ms ease, border-color 150ms ease, opacity 150ms ease;
+}
+.chip.active {
+  background: var(--saffron);
+  border-color: var(--saffron);
+  color: #fff;
+}
+.chip.dim { opacity: .35; pointer-events: none; }
+
 /* ---------- recipe list ---------- */
 .recipe-list {
   list-style: none;
   margin: 0; padding: 0;
+  position: relative;
+}
+.recipe-list li.section-hdr {
+  position: sticky;
+  top: 52px;              /* chip-rail height + 1px border */
+  z-index: 2;
+  background: var(--paper);
+  display: block;
+  padding: 14px 0 8px;
+  margin: 0 calc(-1 * var(--page-pad-x));
+  padding-left: var(--page-pad-x);
+  padding-right: var(--page-pad-x);
+  border-bottom: 1px solid var(--ink-20);
+  border-top: none;
+  font-family: 'Frank Ruhl Libre', serif;
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: .08em;
+  color: var(--saffron);
+  text-align: center;
+  cursor: default;
+}
+.recipe-list li.section-hdr::before,
+.recipe-list li.section-hdr::after {
+  content: '—';
+  color: var(--ink-40);
+  margin: 0 10px;
+  font-weight: 400;
 }
 .recipe-list li {
   padding: 18px 0;

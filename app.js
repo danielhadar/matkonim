@@ -40,6 +40,18 @@ function norm(s) {
     .toLowerCase();
 }
 
+/* ---------- categories ---------- */
+const CATEGORIES = [
+  { key: 'salads',    he: 'סלטים' },
+  { key: 'soups',     he: 'מרקים' },
+  { key: 'starters',  he: 'מנות ראשונות' },
+  { key: 'mains',     he: 'עיקריות' },
+  { key: 'baked',     he: 'מאפים ולחמים' },
+  { key: 'desserts',  he: 'קינוחים' },
+  { key: 'breakfast', he: 'ארוחת בוקר' },
+  { key: 'sauces',    he: 'רטבים' },
+];
+
 /* ---------- local device state ---------- */
 const LS = {
   pin:           'matkonim.pin',          // plain 4-digit; this is a speedbump, not crypto
@@ -270,36 +282,137 @@ async function routeAdmin(rest) {
 }
 
 /* ---------- Reader: Home ---------- */
+let homeScrollHandler = null;  // module-level so we can detach on unmount
+
 function renderHome() {
+  if (homeScrollHandler) {
+    window.removeEventListener('scroll', homeScrollHandler);
+    homeScrollHandler = null;
+  }
+
   const view = cloneTpl('tpl-home');
   const list = $('[data-list]', view);
   const empty = $('[data-empty]', view);
   const search = $('[data-search]', view);
   const countEl = $('[data-count]', view);
+  const chipRail = $('[data-chiprail]', view);
+
+  // Build the chip rail once — 8 categories, no "all"
+  CATEGORIES.forEach((cat, i) => {
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'chip' + (i === 0 ? ' active' : '');
+    btn.textContent = cat.he;
+    btn.dataset.key = cat.key;
+    btn.addEventListener('click', () => jumpToSection(cat.key));
+    chipRail.appendChild(btn);
+  });
+
+  let syncingFromScroll = false;  // guard so tap-triggered scrolls don't fight the scrollspy
+  let idleTimer = null;
+  let sectionTops = [];           // [{ cat, top }] — absolute y of each section start (doc-space)
+
+  const chipHeight = () => chipRail.offsetHeight;
+
+  // Sum siblings' offsetHeights inside .list to get each section's natural y within the list,
+  // then add the list's absolute document position. Bulletproof against sticky positioning.
+  const measureSections = () => {
+    sectionTops = [];
+    const listTopDoc = list.getBoundingClientRect().top + window.scrollY;
+    let y = 0;
+    for (const el of list.children) {
+      if (el.classList && el.classList.contains('section-hdr')) {
+        sectionTops.push({ cat: el.dataset.cat, top: listTopDoc + y });
+      }
+      y += el.offsetHeight;
+    }
+  };
+
+  const centerChip = (key, smooth) => {
+    const chip = chipRail.querySelector(`.chip[data-key="${key}"]`);
+    if (!chip) return;
+    const chipRect = chip.getBoundingClientRect();
+    const railRect = chipRail.getBoundingClientRect();
+    const delta = (chipRect.left + chipRect.width / 2) - (railRect.left + railRect.width / 2);
+    if (Math.abs(delta) < 1) return;
+    chipRail.scrollBy({ left: delta, behavior: smooth ? 'smooth' : 'auto' });
+  };
+
+  const setActiveChip = (key, smoothChip = false) => {
+    chipRail.querySelectorAll('.chip').forEach((c) => c.classList.toggle('active', c.dataset.key === key));
+    centerChip(key, smoothChip);
+  };
+
+  const updateActiveFromScroll = () => {
+    if (!sectionTops.length) return;
+    const threshold = window.scrollY + chipHeight() + 8;
+    let active = sectionTops[0];
+    for (const s of sectionTops) {
+      if (s.top <= threshold) active = s;
+      else break;
+    }
+    setActiveChip(active.cat);
+  };
+
+  const jumpToSection = (key) => {
+    const entry = sectionTops.find((s) => s.cat === key);
+    if (!entry) return;
+    syncingFromScroll = true;
+    window.scrollTo({ top: entry.top - chipHeight(), behavior: 'smooth' });
+    setActiveChip(key, true);
+  };
+
+  const scheduleUnlock = () => {
+    clearTimeout(idleTimer);
+    idleTimer = setTimeout(() => { syncingFromScroll = false; }, 140);
+  };
+
+  const onScroll = () => {
+    if (!list.isConnected) return;  // view has been unmounted
+    if (syncingFromScroll) { scheduleUnlock(); return; }
+    updateActiveFromScroll();
+  };
 
   const renderList = () => {
-    const q = search.value;
-    const results = Store.search(q);
+    const results = Store.search(search.value);   // alphabetical + search filter
     list.innerHTML = '';
+    let total = 0;
+    CATEGORIES.forEach((cat) => {
+      const rows = results.filter((r) => r.category === cat.key);
+      const chip = chipRail.querySelector(`.chip[data-key="${cat.key}"]`);
+      chip.classList.toggle('dim', rows.length === 0);
+      if (rows.length === 0) return;
+      const hdr = document.createElement('li');
+      hdr.className = 'section-hdr';
+      hdr.dataset.cat = cat.key;
+      hdr.textContent = cat.he;
+      list.appendChild(hdr);
+      for (const r of rows) {
+        const li = document.createElement('li');
+        li.innerHTML = `<span class="t"></span>`;
+        $('.t', li).textContent = r.title;
+        li.addEventListener('click', () => navigate(`#/r/${r.id}`));
+        list.appendChild(li);
+      }
+      total += rows.length;
+    });
     countEl.textContent =
-      results.length === 0 ? '' :
-      results.length === 1 ? 'מתכון אחד' :
-      `${results.length} מתכונים`;
-    if (!results.length) { empty.hidden = false; return; }
-    empty.hidden = true;
-    const frag = document.createDocumentFragment();
-    for (const r of results) {
-      const li = document.createElement('li');
-      li.innerHTML = `<span class="t"></span>`;
-      $('.t', li).textContent = r.title;
-      li.addEventListener('click', () => navigate(`#/r/${r.id}`));
-      frag.appendChild(li);
-    }
-    list.appendChild(frag);
+      total === 0 ? '' :
+      total === 1 ? 'מתכון אחד' :
+      `${total} מתכונים`;
+    empty.hidden = total > 0;
+    // Layout measurements must happen after paint
+    requestAnimationFrame(() => {
+      measureSections();
+      updateActiveFromScroll();
+    });
   };
 
   search.addEventListener('input', debounce(renderList, 90));
   wireSearchClear(view, search);
+  homeScrollHandler = onScroll;
+  window.addEventListener('scroll', onScroll, { passive: true });
+
   renderList();
   mount(view);
 }
