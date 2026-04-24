@@ -182,17 +182,26 @@ const Store = {
     return [...this.recipes].sort((a, b) => a.title.localeCompare(b.title, 'he'));
   },
 
-  /** case/nikud-insensitive substring match across title + ingredients + instructions */
+  /**
+   * case/nikud-insensitive match across title + ingredients + instructions.
+   * multi-token AND (every whitespace-separated token must appear somewhere);
+   * recipes whose title contains all tokens rank above body-only matches.
+   */
   search(q) {
     const needle = norm(q).trim();
     const base = this.sorted();
     if (!needle) return base;
-    return base.filter((r) => {
-      const hay = norm(
-        r.title + '\n' + r.ingredients.join('\n') + '\n' + r.instructions.join('\n')
-      );
-      return hay.includes(needle);
-    });
+    const tokens = needle.split(/\s+/).filter(Boolean);
+    const titleHits = [];
+    const bodyHits = [];
+    for (const r of base) {
+      const title = norm(r.title);
+      const hay = title + '\n' + norm(r.ingredients.join('\n') + '\n' + r.instructions.join('\n'));
+      if (!tokens.every((t) => hay.includes(t))) continue;
+      if (tokens.every((t) => title.includes(t))) titleHits.push(r);
+      else bodyHits.push(r);
+    }
+    return titleHits.concat(bodyHits);
   },
 };
 
